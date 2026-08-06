@@ -7,7 +7,7 @@ image:
   repository: asia-south1-docker.pkg.dev/elaborate-art-504407-a2/poc-lower/poc-service
   tag: "1.0.0-rc.61f421c"
   digest: "sha256:e777b8a4f94cd8497778c0835632815a6a84b39b904404b3a807886d7f84ae53"
-replicaCount: 2
+replicaCount: 1
 env:
   APP_ENV: qa
   GREETING: "hello from qa"
