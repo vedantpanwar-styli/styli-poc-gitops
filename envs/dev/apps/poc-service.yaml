@@ -1,20 +1,15 @@
 # service is read by the ApplicationSet generator to name the Application
 service: poc-service
-
 # cluster is the ArgoCD cluster name this environment deploys to
 cluster: in-cluster
-
 # image.* is written by Cloud Build on merge to release
 image:
   repository: asia-south1-docker.pkg.dev/elaborate-art-504407-a2/poc-lower/poc-service
-  tag: "0.0.0"
-  digest: "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-
+  tag: "1.0.0-rc.e596c52"
+  digest: "sha256:a787b5c81a6d08e797bceecec743bcae1507f5e5693324abb33b21745f8a275b"
 replicaCount: 1
-
 env:
   APP_ENV: dev
   GREETING: "hello from dev"
-
 secretRefs:
   - poc-service-secrets
