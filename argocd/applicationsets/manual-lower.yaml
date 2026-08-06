@@ -1,18 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: poc-lower
+  name: poc-manual-lower
   namespace: argocd
 spec:
   goTemplate: false
+
+  # Cloud Build writes the digest here on every release merge, but qa and uat
+  # are synced by hand so a running test session is not interrupted.
   generators:
-    # one Application per environment per file under envs/<env>/apps/
     - matrix:
         generators:
           - list:
               elements:
-                - env: dev
                 - env: qa
+                - env: uat
           - git:
               repoURL: https://github.com/vedantpanwar-styli/styli-poc-gitops
               revision: main
@@ -38,5 +40,5 @@ spec:
         server: https://kubernetes.default.svc
         namespace: "poc-service-{{env}}"
       syncPolicy:
-        automated: { prune: true, selfHeal: true }
+        # no automated block
         syncOptions: [CreateNamespace=true]

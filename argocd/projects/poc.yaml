@@ -17,6 +17,8 @@ spec:
     - server: https://kubernetes.default.svc
       namespace: poc-service-qa
     - server: https://kubernetes.default.svc
+      namespace: poc-service-uat
+    - server: https://kubernetes.default.svc
       namespace: poc-service-prod
 
   # nothing cluster-scoped
