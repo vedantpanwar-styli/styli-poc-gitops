@@ -37,7 +37,7 @@ spec:
           targetRevision: main
           ref: values
       destination:
-        server: https://kubernetes.default.svc
+        name: "{{cluster}}"
         namespace: "poc-service-{{env}}"
       syncPolicy:
         # no automated block

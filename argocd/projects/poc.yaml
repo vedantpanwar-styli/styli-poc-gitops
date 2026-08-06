@@ -10,15 +10,16 @@ spec:
   sourceRepos:
     - https://github.com/vedantpanwar-styli/styli-poc-gitops
 
-  # only these namespaces
+  # only these namespaces. Clusters are matched by name, so registering the
+  # production cluster later is an argocd cluster add plus a name here.
   destinations:
-    - server: https://kubernetes.default.svc
+    - name: in-cluster
       namespace: poc-service-dev
-    - server: https://kubernetes.default.svc
+    - name: in-cluster
       namespace: poc-service-qa
-    - server: https://kubernetes.default.svc
+    - name: in-cluster
       namespace: poc-service-uat
-    - server: https://kubernetes.default.svc
+    - name: in-cluster
       namespace: poc-service-prod
 
   # nothing cluster-scoped
