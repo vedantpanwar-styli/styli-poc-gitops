@@ -13,11 +13,11 @@ spec:
   # only these namespaces
   destinations:
     - server: https://kubernetes.default.svc
-      namespace: dev
+      namespace: poc-service-dev
     - server: https://kubernetes.default.svc
-      namespace: qa
+      namespace: poc-service-qa
     - server: https://kubernetes.default.svc
-      namespace: prod
+      namespace: poc-service-prod
 
   # nothing cluster-scoped
   clusterResourceWhitelist: []

@@ -36,7 +36,7 @@ spec:
           ref: values
       destination:
         server: https://kubernetes.default.svc
-        namespace: prod
+        namespace: poc-service-prod
       syncPolicy:
         # no automated block - production is synced by hand
         syncOptions: [CreateNamespace=true]

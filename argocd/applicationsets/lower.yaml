@@ -36,7 +36,7 @@ spec:
           ref: values
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{env}}"
+        namespace: "poc-service-{{env}}"
       syncPolicy:
         automated: { prune: true, selfHeal: true }
         syncOptions: [CreateNamespace=true]
