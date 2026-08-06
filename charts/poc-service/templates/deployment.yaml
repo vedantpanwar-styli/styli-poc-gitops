@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/version: {{ .Values.image.tag | quote }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: { app.kubernetes.io/name: {{ .Chart.Name }} }
+  template:
+    metadata:
+      labels: { app.kubernetes.io/name: {{ .Chart.Name }} }
+      annotations:
+        # restarts pods when the ConfigMap changes
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: app
+          # deploys by digest; tag is only for readability
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}@{{ .Values.image.digest }}"
+          ports: [{ containerPort: 8080 }]
+          envFrom:
+            - configMapRef: { name: {{ .Release.Name }}-config }
+            {{- range .Values.secretRefs }}
+            - secretRef:
+                name: {{ . }}
+                optional: true
+            {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          livenessProbe:
+            httpGet: { path: /health, port: 8080 }
+            initialDelaySeconds: 5
+          readinessProbe:
+            httpGet: { path: /ready, port: 8080 }
+          resources: {{- toYaml .Values.resources | nindent 12 }}

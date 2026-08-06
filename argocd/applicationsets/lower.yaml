@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: poc-lower
+  namespace: argocd
+spec:
+  goTemplate: false
+  generators:
+    # one Application per environment per file under envs/<env>/apps/
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - env: dev
+                - env: qa
+          - git:
+              repoURL: https://github.com/vedantpanwar-styli/styli-poc-gitops
+              revision: main
+              files:
+                - path: "envs/{{env}}/apps/*.yaml"
+
+  template:
+    metadata:
+      name: "{{env}}-{{service}}"
+    spec:
+      project: poc
+      sources:
+        - repoURL: https://github.com/vedantpanwar-styli/styli-poc-gitops
+          targetRevision: main
+          path: charts/poc-service
+          helm:
+            valueFiles:
+              - $values/envs/{{env}}/apps/{{service}}.yaml
+        - repoURL: https://github.com/vedantpanwar-styli/styli-poc-gitops
+          targetRevision: main
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{env}}"
+      syncPolicy:
+        automated: { prune: true, selfHeal: true }
+        syncOptions: [CreateNamespace=true]

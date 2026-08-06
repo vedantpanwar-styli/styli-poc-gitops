@@ -1,0 +1,22 @@
+# kubectl apply -f bootstrap/root-app.yaml
+#
+# The only object applied by hand. It watches argocd/ in this repo, so the
+# AppProject and both ApplicationSets are managed by Git from here on.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vedantpanwar-styli/styli-poc-gitops
+    targetRevision: main
+    path: argocd
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }

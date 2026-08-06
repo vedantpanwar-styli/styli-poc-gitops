@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: poc
+  namespace: argocd
+spec:
+  description: PoC service
+
+  # only this repo
+  sourceRepos:
+    - https://github.com/vedantpanwar-styli/styli-poc-gitops
+
+  # only these namespaces
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: dev
+    - server: https://kubernetes.default.svc
+      namespace: qa
+    - server: https://kubernetes.default.svc
+      namespace: prod
+
+  # nothing cluster-scoped
+  clusterResourceWhitelist: []

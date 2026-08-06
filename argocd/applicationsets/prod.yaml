@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: poc-prod
+  namespace: argocd
+spec:
+  goTemplate: false
+
+  # a bad edit here must never delete running production workloads
+  preservedFields:
+    annotations: []
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+
+  generators:
+    - git:
+        repoURL: https://github.com/vedantpanwar-styli/styli-poc-gitops
+        revision: main
+        files:
+          - path: "envs/prod/apps/*.yaml"
+
+  template:
+    metadata:
+      name: "prod-{{service}}"
+    spec:
+      project: poc
+      sources:
+        - repoURL: https://github.com/vedantpanwar-styli/styli-poc-gitops
+          targetRevision: main
+          path: charts/poc-service
+          helm:
+            valueFiles:
+              - $values/envs/prod/apps/{{service}}.yaml
+        - repoURL: https://github.com/vedantpanwar-styli/styli-poc-gitops
+          targetRevision: main
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: prod
+      syncPolicy:
+        # no automated block - production is synced by hand
+        syncOptions: [CreateNamespace=true]

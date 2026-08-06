@@ -1,0 +1,17 @@
+# service is read by the ApplicationSet generator to name the Application
+service: poc-service
+
+# image.* is written by Cloud Build on merge to production
+image:
+  repository: asia-south1-docker.pkg.dev/elaborate-art-504407-a2/styli/poc-service
+  tag: "v0.0.0"
+  digest: "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+
+replicaCount: 3
+
+env:
+  APP_ENV: production
+  GREETING: "hello"
+
+secretRefs:
+  - poc-service-secrets

@@ -1,0 +1,16 @@
+image:
+  repository: ""
+  tag: ""
+  digest: ""
+
+replicaCount: 1
+
+resources:
+  requests: { cpu: 50m, memory: 64Mi }
+  limits:   { cpu: 200m, memory: 256Mi }
+
+env: {}
+
+# Names of Kubernetes Secrets to mount as env vars.
+# Secrets are created with kubectl per namespace, not stored here.
+secretRefs: []
