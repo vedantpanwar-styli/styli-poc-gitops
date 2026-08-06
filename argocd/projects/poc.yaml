@@ -22,5 +22,8 @@ spec:
     - name: in-cluster
       namespace: poc-service-prod
 
-  # nothing cluster-scoped
-  clusterResourceWhitelist: []
+  # Namespace only, because syncOptions has CreateNamespace=true. Everything
+  # else the chart deploys is namespaced.
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
