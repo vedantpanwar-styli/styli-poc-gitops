@@ -6,8 +6,8 @@ cluster: in-cluster
 # image.* is written by Cloud Build when a promote/<version> tag is pushed
 image:
   repository: asia-south1-docker.pkg.dev/elaborate-art-504407-a2/poc-prod/poc-service
-  tag: "v26.8.0"
-  digest: "sha256:e777b8a4f94cd8497778c0835632815a6a84b39b904404b3a807886d7f84ae53"
+  tag: "v26.8.1"
+  digest: "sha256:f7314c0aa28048d77db4caaf7fa2f12cdca07c1b6cc333a0c44d5236560c9235"
 replicaCount: 0
 env:
   APP_ENV: production
