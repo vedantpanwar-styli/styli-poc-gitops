@@ -5,8 +5,8 @@ cluster: in-cluster
 # image.* is written by Cloud Build on merge to production
 image:
   repository: asia-south1-docker.pkg.dev/elaborate-art-504407-a2/poc-lower/poc-service
-  tag: "1.0.0-rc.5115b80"
-  digest: "sha256:f7314c0aa28048d77db4caaf7fa2f12cdca07c1b6cc333a0c44d5236560c9235"
+  tag: "1.0.0-rc.3dbb06e"
+  digest: "sha256:e1cdc28d87e4cfa04c8c1013af0c642831eb9e98d79cd1a2de9943a1a93ac7dc"
 replicaCount: 0
 env:
   APP_ENV: dev
