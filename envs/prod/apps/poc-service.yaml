@@ -3,7 +3,7 @@ service: poc-service
 # cluster is the ArgoCD cluster name this environment deploys to. Production
 # moves to its own cluster in its own project later; only this value changes.
 cluster: in-cluster
-# image.* is written by Cloud Build on merge to production
+# image.* is written by Cloud Build when a promote/<version> tag is pushed
 image:
   repository: asia-south1-docker.pkg.dev/elaborate-art-504407-a2/poc-prod/poc-service
   tag: "v26.8.0"
